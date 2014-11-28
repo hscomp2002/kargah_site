@@ -1,0 +1,44 @@
+ul.gallery {
+    overflow: auto;
+}
+li.thumb {
+    display: block;
+    position: relative;
+    float: right;
+    margin: 10px;
+    background: #f9f9f9;
+    width: 80px;
+    position: relative;
+}
+.thumb_del {
+    position: absolute;
+    bottom: 22px;
+    right: 5px;
+    cursor: pointer;
+}
+.toz {
+    background: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+}
+ul{
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: block;
+}
+.thumb div a img {
+    
+}
+.thumb_img {
+    border: 1px solid #ddd;
+    border-radius: 3px;
+    padding: 5px;
+    height: 100px;
+}
+.thumb_title {
+    text-align: center;
+    height: 20px;
+    overflow: hidden;
+    width: 80px;
+}
