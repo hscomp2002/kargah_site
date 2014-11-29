@@ -18,6 +18,8 @@ include COM_PATH.'class/xgrid.php';
 include COM_PATH.'class/inc.php';
 include COM_PATH.'class/jdf.php';
 include COM_PATH.'class/audit_class.php';
+include COM_PATH.'class/kargah_class.php';
+include COM_PATH.'class/kargah_view_class.php';
 $document = JFactory::getDocument();
 $document->addScript(COM_PATH.'js/jquery.min.js');
 $document->addScript(COM_PATH.'js/grid.js');
@@ -29,9 +31,22 @@ $document->addScript(COM_PATH.'js/cal/calendar.js');
 $document->addScript(COM_PATH.'js/cal/calendar-setup.js');
 $document->addScript(COM_PATH.'js/cal/lang/calendar-fa.js');
 
-$document->addStyleSheet(COM_PATH.'css/bootstrap.min.css');
+//$document->addStyleSheet(COM_PATH.'css/bootstrap.min.css');
 $document->addStyleSheet(COM_PATH.'css/xgrid.css');
 $document->addStyleSheet(COM_PATH.'css/com_kargah.css');
 $document->addStyleSheet(COM_PATH.'css/jquery.fileupload.css');
 $document->addStyleSheet(COM_PATH.'js/cal/skins/aqua/theme.css');
-
+$kargahs = kargah_class::loadActives();
+//var_dump($kargahs);
+$comman = (isset($_REQUEST['comman']) && trim($_REQUEST['comman'])!='')?$_REQUEST['comman']:'main';
+if($comman == 'main')
+{
+	$out = kargah_view_class::main_view($kargahs);
+	echo $out;
+}
+else
+{
+	require($comman.'.php');
+	
+}
+//echo '<a href="index.php?option=com_kargah&"  class="btn btn-warning" ><i class="icon-white icon-arrow-left"></i>بازگشت به صفحه اصلی</a>';
