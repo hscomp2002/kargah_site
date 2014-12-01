@@ -13,17 +13,25 @@
 		$ln = $my->ex_sqlx("insert into #__kargah_reserve (tarikh,fname,lname,mob,tell,address,kargah_id) values ('$dt','".$_REQUEST['fname']."','".$_REQUEST['lname']."','".$_REQUEST['mob']."','".$_REQUEST['tell']."','".$_REQUEST['address']."',$id)",FALSE);
 		$kid = $my->insert_id($ln);
 		$my->close($ln);
-		$msg='<h3>ثبت با موفقیت انجام شد</h3>';
+		$msg='<h3>ثبت با موفقیت انجام شد کد رهگیری شما <span id="rahgiri">'.$kid.'</span> می باشد</h3>';
 	}
 ?>
 <script>
 	var kargah_reserve_id = <?php echo $kid; ?>;
 </script>
+<style>
+	#rahgiri{
+		border : 1px solid #eaeaea;
+		padding 5px;
+		background : black;
+		color:white;
+	}
+</style>
 <div>
 	<?php
 		echo $msg.$det;
 	?>
-	<form method="post">
+	<form method="post" id="frm1">
 		<div class="CSSTableGenerator" >
 			<table>
 				<tr>
@@ -76,6 +84,7 @@
 				<tr>
 					<td>
 						<input type="hidden" name="id" value="<?php echo $id; ?>" />
+						<input type="hidden" name="bank_send" id="bank_send" value="false" />
 						<p class="readmore" ><a href="#" class="readmore" >ثبت نام قطعی</a></p>
 					</td>
 					<td>
