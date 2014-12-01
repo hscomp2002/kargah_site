@@ -20,6 +20,7 @@ include COM_PATH.'class/jdf.php';
 include COM_PATH.'class/audit_class.php';
 include COM_PATH.'class/kargah_class.php';
 include COM_PATH.'class/kargah_view_class.php';
+include COM_PATH.'class/pay_class.php';
 $document = JFactory::getDocument();
 $document->addScript(COM_PATH.'js/jquery.min.js');
 $document->addScript(COM_PATH.'js/grid.js');
@@ -39,6 +40,8 @@ $document->addStyleSheet(COM_PATH.'js/cal/skins/aqua/theme.css');
 $kargahs = kargah_class::loadActives();
 //var_dump($kargahs);
 $comman = (isset($_REQUEST['comman']) && trim($_REQUEST['comman'])!='')?$_REQUEST['comman']:'main';
+if($comman == 'main' && isset($_REQUEST['RefId']))
+	$comman = 'purchase';
 if($comman == 'main')
 {
 	$out = kargah_view_class::main_view($kargahs);
