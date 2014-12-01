@@ -62,5 +62,4 @@ else
 	require($comman.'.php');
 	
 }
-echo '<div style="background:black;"><a href="index.php?option=com_kargah&comman=combo&"  class="btn btn-warning" >نمایش لیستی</a><a href="index.php?option=com_kargah"  class="btn btn-warning" >نمایش گریدی</a></div>';
 //echo '<a href="index.php?option=com_kargah&"  class="btn btn-warning" ><i class="icon-white icon-arrow-left"></i>بازگشت به صفحه اصلی</a>';

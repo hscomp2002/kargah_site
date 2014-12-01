@@ -28,6 +28,9 @@
 			<table>
 				<tr>
 					<td colspan="2" >
+                                            <h3>
+                                                ثبت نام
+                                            </h3>
 					</td>
 				</tr>
 				<tr>
@@ -71,11 +74,11 @@
 					</td>
 				</tr>
 				<tr>
-					<td colspan="" >
+					<td>
 						<input type="hidden" name="id" value="<?php echo $id; ?>" />
 						<p class="readmore" ><a href="#" class="readmore" >ثبت نام قطعی</a></p>
 					</td>
-					<td colspan="" >
+					<td>
 						<p class="readmore" ><a href="#" class="readmore" >ثبت نام موقت</a></p>
 					</td>
 					</tr>
