@@ -44,9 +44,23 @@ if($comman == 'main')
 	$out = kargah_view_class::main_view($kargahs);
 	echo $out;
 }
+else if($comman == 'combo')
+{
+	$out = '<div><form method="post">';
+	$out .= '<select name="id" >';
+	$out .= '<option value="-1"></option>';
+	foreach($kargahs as $kargah)
+		$out .= '<option value="'.$kargah->id.'" >'.$kargah->name.'</option>';
+	$out .= '</select>';
+	$out .= '<input type="hidden" name="comman" value="register" />';
+	$out .= '<button>انتخاب</button>';
+	$out .='</form></div>';
+	echo $out;
+}
 else
 {
 	require($comman.'.php');
 	
 }
+echo '<div style="background:black;"><a href="index.php?option=com_kargah&comman=combo&"  class="btn btn-warning" >نمایش لیستی</a><a href="index.php?option=com_kargah"  class="btn btn-warning" >نمایش گریدی</a></div>';
 //echo '<a href="index.php?option=com_kargah&"  class="btn btn-warning" ><i class="icon-white icon-arrow-left"></i>بازگشت به صفحه اصلی</a>';
