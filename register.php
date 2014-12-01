@@ -13,24 +13,18 @@
 		$ln = $my->ex_sqlx("insert into #__kargah_reserve (tarikh,fname,lname,mob,tell,address,kargah_id) values ('$dt','".$_REQUEST['fname']."','".$_REQUEST['lname']."','".$_REQUEST['mob']."','".$_REQUEST['tell']."','".$_REQUEST['address']."',$id)",FALSE);
 		$kid = $my->insert_id($ln);
 		$my->close($ln);
-		$msg='<h3>ثبت با موفقیت انجام شد کد رهگیری شما <span id="rahgiri">'.$kid.'</span> می باشد</h3>';
+		$msg='<div class="alert alert-success" >ثبت با موفقیت انجام شد کد رهگیری شما <span id="rahgiri">'.$kid.'</span> می باشد</div>';
 	}
 ?>
 <script>
 	var kargah_reserve_id = <?php echo $kid; ?>;
 </script>
-<style>
-	#rahgiri{
-		border : 1px solid #eaeaea;
-		padding 5px;
-		background : black;
-		color:white;
-	}
-</style>
 <div>
 	<?php
 		echo $msg.$det;
+                if(!isset($_REQUEST['fname'])){
 	?>
+        
 	<form method="post" id="frm1">
 		<div class="CSSTableGenerator" >
 			<table>
@@ -89,9 +83,11 @@
 					</td>
 					<td>
 						<p class="readmore" ><a href="#" class="readmore" >ثبت نام موقت</a></p>
+                                                <button>test</button>
 					</td>
 					</tr>
 			</table>
 		</div>
 	</form>
+                <?php } ?>
 </div>

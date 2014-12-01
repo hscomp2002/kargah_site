@@ -10,7 +10,7 @@
 		public $access_deny = "error";
 		public $enableSms = FALSE;
 		public $company_id=1;
-		public function  __get($key)
+                public function  __get($key)
 		{
 			$mysql = new mysql_class;
 			$out = '';
