@@ -17,6 +17,7 @@
 					$this->pic = $r['pic'];
 					$this->tarikh = $r['tarikh'];
 					$this->en = $r['en'];
+                                        $this->ghimat =(int) $r['ghimat'];
 				}
 			}
 		}
@@ -34,6 +35,7 @@
 				$thi->pic = $r['pic'];
 				$thi->tarikh = $r['tarikh'];
 				$thi->en = $r['en'];
+                                $thi->ghimat =(int) $r['ghimat'];
 			        $tmp = explode('/',$thi->pic);
 			        $thi->thumbnail = str_replace($tmp[count($tmp)-1], 'thumbnail/'.$tmp[count($tmp)-1], $thi->pic);
 				$out[] = $thi;
