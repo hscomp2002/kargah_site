@@ -13,7 +13,8 @@
 		if(($pay == '0' || (int)$pay == 43) && (!is_array($pay)))
 		{
 			$my = new mysql_class;
-			$my->ex_sqlx("update #__kargah_reserve set pardakht = '$SaleReferenceId' where id = $SaleOrderId");
+			$kid = $SaleOrderId-1000000;
+			$my->ex_sqlx("update #__kargah_reserve set pardakht = '$SaleReferenceId' where id = $kid");
 /*
 			$pardakht = new pardakht_class($SaleOrderId);
 			$pardakht->bank_out = serialize($bank_out);
@@ -22,7 +23,7 @@
                         $toz = ' افزایش اعتبار بابت شارژ اینترنتی از درگاه، شماره پیگیری بانکی '.$SaleReferenceId;
                         $parvande->addEtebar($pardakht->mablagh,user_parvande_class::loadUserIdByParvandeId($pardakht->parvande_id),$toz);
 */
-			$rev = pay_class->settle($SaleOrderId,$SaleReferenceId);
+			$rev = pay_class::settle($SaleOrderId,$SaleReferenceId);
 			$out = '<div class="msg" >
 					پرداخت با موفقیت انجام گرفت
 				</div>
