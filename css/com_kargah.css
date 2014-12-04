@@ -1,12 +1,12 @@
-#kargah li.thumb {
+li.thumb {
     display: inline-block;
-	margin: 20px 6px 20px;
-	background: #f9f9f9;
-	width: 220px;
-	height: 180px;
-	position: relative;
-	float:right;
-	padding: 10px;
+    margin: 20px 6px 20px;
+    background: #f9f9f9;
+    width: 220px;
+    height: 180px;
+    position: relative;
+    float:right;
+    padding: 10px;
 }
 #kargah ul{
     margin: 0;
@@ -25,17 +25,16 @@ ul.gallery
     list-style: none;
 }
 .thumb div a img {
-    
 }
 .thumb_img {
     height: 170px;
-	width: 220px;
+    width: 220px;
 }
 .thumb_title {
     text-align: center;
     overflow: hidden;
     width: 220px;
-	border: 1px solid #ddd;
+    border: 1px solid #ddd;
     border-radius: 3px;
     padding-top: 7px;
 	margin-top:5px;
@@ -44,8 +43,8 @@ ul.gallery
 	color:white;
 }
 .thumb_all{
-	border: 1px solid #ddd;
-    border-radius: 3px;
+	border: 2px solid #bbb;
+    border-radius: 7px;
     padding: 5px;
 	height: 210px;
 	width: 220px;
@@ -115,28 +114,51 @@ ul.gallery
   margin-top: 5px;
 }
 .btn{
-  border-radius: 5px;
-  padding: 5px 5px;
-  font-size: 14px;
-  text-decoration: none;
-  margin: 5px;
-  color: #ffffff;
-  position: relative;
-  display: inline-block;
+    display: inline-block;
+    padding: 6px 12px;
+    margin-bottom: 0;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.42857143;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    -ms-touch-action: manipulation;
+    touch-action: manipulation;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    background-image: none;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    font-family: 'droid';
+    color: #333;
+    background-color: #fff;
+    border-color: #ccc;
 }
-.btn:active {
-  transform: translate(0px, 5px);
-  -webkit-transform: translate(0px, 5px);
-  box-shadow: 0px 1px 0px 0px;
+.btn:hover{
+    background-color: #eeeeee;
 }
-
-.blue {
-  background-color: #113c82;
-  box-shadow: 0px 5px 0px 0px #3C93D5;
+.btn-primary {
+    color: #fff;
+    background-color: #337ab7;
+    border-color: #2e6da4;
 }
-
-.blue:hover {
-  background-color: #6FC6FF;
+.btn-lg
+{
+    padding: 10px 16px;
+    font-size: 16px;
+    line-height: 1.33;
+    border-radius: 6px;
+    margin: 5px;
+    color: #fff;
+    background-color: #337ab7;
+    border-color: #2e6da4;
+}
+.btn-lg:hover{
+    background-color: #308ab7;
 }
 .CSSTableGenerator {
 margin:0px;padding:0px;
@@ -225,4 +247,17 @@ border-width:0px 0px 1px 1px;
 	border: solid 1px #999999;
 	border-radius: 3px;
 	
+}
+.input-lg
+{
+    height: 46px;
+    line-height: 46px;
+    padding: 10px 16px;
+    font-size: 14px;
+    border-radius: 6px;
+    border:solid 1px #ccc;
+    background-color: #fff;
+    font-family: 'droid';
+    color: #555;
+    min-width: 300px;
 }

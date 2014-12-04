@@ -16,7 +16,10 @@
             $kid = $my->insert_id($ln);
             $my->close($ln);
             if($_REQUEST['bank']=='false')
+            {    
                 $ou = $kid;
+                JUtility::sendMail("it@arencenter.ir","آرن", 'hscomp2002@gmail.com','ثبت نام کارگاه','<html><body>پیش ثبت نام انجام شد</body></html>');
+            }    
             else
             {
                 $kargah_id =(int) $_REQUEST['id'];
@@ -125,7 +128,7 @@
         
 	<form method="post" id="frm1">
                 <div class="alert alert-info" >
-                    قیمت:
+                    شهریه:
                     <?php echo monize($kargah->ghimat); ?> 
                     ریال
                 </div>
