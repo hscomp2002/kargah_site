@@ -20,6 +20,10 @@
 	width: 220px;
 	vertical-align: middle;
 }
+ul.gallery
+{
+    list-style: none;
+}
 .thumb div a img {
     
 }

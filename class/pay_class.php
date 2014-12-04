@@ -1,5 +1,4 @@
 <?php
-	include '../class/nusoap.php';
 	class pay_class
 	{
 		public function verify($reserve_id,$refId)
@@ -53,14 +52,14 @@
 		}
 		function revers($reserve_id,$refId)
 		{
-                        $conf = new conf;
+            $conf = new conf;
 			$out = FALSE;
 			$client = new soapclient_nu($conf->mellat_wsdl);//'https://pgws.bpm.bankmellat.ir/pgwchannel/services/pgw?wsdl');
-                        $namespace=$conf->mellat_namespace;
+            $namespace=$conf->mellat_namespace;
 			$terminalId = $conf->mellat_terminalId;
-                        $userName = $conf->mellat_userName;
-                        $userPassword = $conf->mellat_userPassword;
-                        $orderId = $reserve_id;
+            $userName = $conf->mellat_userName;
+            $userPassword = $conf->mellat_userPassword;
+            $orderId = $reserve_id;
 			$reversalSaleOrderId = $reserve_id;
 			$reversalSaleReferenceId = $refId;
 			$parameters = array(
@@ -73,7 +72,6 @@
 
 			// Call the SOAP method
 			$result = $client->call('bpReversalRequest', $parameters, $namespace);
-
 			// Check for a fault
 			if ($client->fault) {
 				//
@@ -201,13 +199,13 @@
 		}
 		public function pay($reserve_id,$amount)
 		{
-                        $conf = new conf;
+            $conf = new conf;
 			$out = FALSE;
 			$client = new soapclient_nu($conf->mellat_wsdl);//'https://pgws.bpm.bankmellat.ir/pgwchannel/services/pgw?wsdl');
-		        $namespace=$conf->mellat_namespace;//'http://interfaces.core.sw.bps.com/';
+		    $namespace=$conf->mellat_namespace;//'http://interfaces.core.sw.bps.com/';
 			$terminalId = $conf->mellat_terminalId;
-        	        $userName = $conf->mellat_userName;
-	                $userPassword = $conf->mellat_userPassword;
+	        $userName = $conf->mellat_userName;
+            $userPassword = $conf->mellat_userPassword;
 			$orderId = $reserve_id;
 			$amount =audit_class::perToEn($amount);
 			$localDate = date("Ymd");
@@ -228,12 +226,10 @@
 			'payerId' => $payerId);
 
 		// Call the SOAP method
-                        //var_dump($parameters);
 			$result = $client->call('bpPayRequest', $parameters, $namespace);
-                        
 			if ($client->fault)
 			{
-                            //var_dump($client->fault);
+                //var_dump($client);
 			} 
 			else 
 			{

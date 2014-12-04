@@ -1,25 +1,4 @@
 <?php
-        if(isset($_REQUEST['kargah_id']))
-        {
-            $kargah_id =(int) $_REQUEST['kargah_id'];
-            if($kargah_id > 0)
-            {
-                $kargah = new kargah_class($kargah_id);
-                $tarikh = date("Y-m-d H:i:s");
-                $pardakht_id = pardakht_class::add($parvande_id,$tarikh,$kargah->ghimat);
-                $pardakht_id+=1000000;
-                $pardakht = new pardakht_class($pardakht_id);
-                $pay_code = pay_class::pay($pardakht_id,$kargah->ghimat);
-                $tmpo = explode(',',$pay_code);
-                if(count($tmpo)==2 && $tmpo[0]==0 && $conf->ps !== 'TRUE')
-                        $out = $tmpo[1];
-                else
-                        $out =-1;
-            }
-            else
-                $out = 'no_kargah';
-            die($out);
-        }    
 	$msg='';
 	$conf = new conf;
 	$id = (int)$_REQUEST['id'];
@@ -28,68 +7,74 @@
 	$det = kargah_view_class::single_view($kargah);
 	if(isset($_REQUEST['fname']))
 	{
-                $ou = '-1';
-		$date = new DateTime(date("Y-m-d H:i:s"));
-		$date->setTimezone(new DateTimeZone('Asia/Tehran'));
-		$dt = $date->format('Y-m-d H:i:s').'<br/>';
-		$my = new mysql_class;
-		$ln = $my->ex_sqlx("insert into #__kargah_reserve (tarikh,fname,lname,mob,tell,address,kargah_id) values ('$dt','".$_REQUEST['fname']."','".$_REQUEST['lname']."','".$_REQUEST['mob']."','".$_REQUEST['tell']."','".$_REQUEST['address']."',$id)",FALSE);
-		$kid = $my->insert_id($ln);
-		$my->close($ln);
-        if($_REQUEST['bank']=='false')
-            $ou = $kid;
-        else
-        {
-
-            $kargah_id =(int) $_REQUEST['id'];
-            $kargah = new kargah_class($kargah_id);
-            $kid+=1000000;
-            if($kargah->ghimat>=1000 || TRUE)
+            $ou = '-1';
+            $date = new DateTime(date("Y-m-d H:i:s"));
+            $date->setTimezone(new DateTimeZone('Asia/Tehran'));
+            $dt = $date->format('Y-m-d H:i:s').'<br/>';
+            $my = new mysql_class;
+            $ln = $my->ex_sqlx("insert into #__kargah_reserve (tarikh,fname,lname,mob,tell,address,kargah_id) values ('$dt','".strip_tags($_REQUEST['fname'])."','".strip_tags($_REQUEST['lname'])."','".strip_tags($_REQUEST['mob'])."','".strip_tags($_REQUEST['tell'])."','".strip_tags($_REQUEST['address'])."',$id)",FALSE);
+            $kid = $my->insert_id($ln);
+            $my->close($ln);
+            if($_REQUEST['bank']=='false')
+                $ou = $kid;
+            else
             {
-                $pay_code = pay_class::pay($kid,$kargah->ghimat);
-                $tmpo = explode(',',$pay_code);
-                if(count($tmpo)==2 && $tmpo[0]==0 && $conf->ps !== 'TRUE')
-                        $ou = $tmpo[1];
-                else
-                        $ou =-1;
-            }    
-        }
-        die("$ou");
+                $kargah_id =(int) $_REQUEST['id'];
+                $kargah = new kargah_class($kargah_id);
+                $kid+=1000000;
+                if($kargah->ghimat>=1000 || TRUE)
+                {
+                    $pay_code = pay_class::pay($kid,$kargah->ghimat);
+                    $tmpo = explode(',',$pay_code);
+                    if(count($tmpo)==2 && $tmpo[0]==0 && $conf->ps !== 'TRUE')
+                            $ou = $tmpo[1];
+                    else
+                            $ou =-1;
+                }    
+            }
+            die("$ou");
 	}
 ?>
 <script>
 	var kargah_reserve_id = <?php echo $kid; ?>;
         var base_url ='<?php echo COM_PATH; ?>';
-        
         function start_kharid(inp,bank)
 	{
-            jQuery("#khoon").html("درحال ارسال اطلاعات ...");
-            var requ = jQuery("#frm1").serialize();
-            jQuery.get(base_url+"?comman=register&"+requ+"&bank="+(bank?'true':'false'),function(result){
-                console.log(result);
-                result = jQuery.trim(result);
-                if(result!=='-1')
-                {
-                    jQuery(".CSSTableGenerator input").prop("disabled",true);
-                    if(!bank)
-                    {    
-                        jQuery("#khoon").html("ثبت نام موقت شما با موفقیت انجام گرفت");
+            if(val_form())
+            {    
+                jQuery("#khoon").html("درحال ارسال اطلاعات ...");
+                jQuery("#tr_btn").hide();
+                var requ = jQuery("#frm1").serialize();
+                jQuery.get(base_url+"?comman=register&"+requ+"&bank="+(bank?'true':'false'),function(result){
+                    result = jQuery.trim(result);
+                    if(result!=='-1')
+                    {
+                        jQuery(".CSSTableGenerator table").hide('slow');
+                        if(!bank)
+                        {    
+                            jQuery("#khoon").addClass("alert alert-success");
+                            jQuery("#khoon").html("ثبت نام موقت شما با موفقیت انجام گرفت کد پیگیری شما  "+result+" می باشد");
+                        }
+                        else
+                        {
+                            postRefId(result);
+                        }    
                     }
                     else
                     {
-                        postRefId(result);
+                        alert("خطا در  ارتباط با بانک لطفا بعدا تلاش فرمایید");
+                        jQuery("#khoon").html(""); 
+                        jQuery("#tr_btn").show();
                     }    
-                }
-                else
-                    alert("خطا در  ارتباط با بانک لطفا بعدا تلاش فرمایید");
-            });
+                });
+            }
 	}
         function postRefId (refIdValue)
         {
                 var form = document.createElement("form");
                 form.setAttribute("method", "POST");
-				form.setAttribute("id", "mellat_frm");
-                form.setAttribute("action", "<?php echo $conf->mellat_payPage; ?>");         
+		form.setAttribute("id", "mellat_frm");
+                form.setAttribute("action","<?php echo $conf->mellat_payPage; ?>");         
                 form.setAttribute("target", "_self");
                 var hiddenField = document.createElement("input");              
                 hiddenField.setAttribute("name", "RefId");
@@ -99,7 +84,39 @@
                 jQuery("#mellat_frm").submit();
                 document.body.removeChild(form);
         }
-        
+        function val_form()
+        {
+            if(jQuery("#fname").val().length < 3)
+            {
+                alert("نام را کامل وارد کنید");
+                return false;
+            }
+            if(jQuery("#lname").val().length < 3)
+            {
+                alert("نام خانوادگی را کامل وارد کنید");
+                return false;
+            }
+            if(jQuery("#mob").val().length < 9 && !isInt(jQuery("#mob").val()))
+            {
+                alert("تلفن همراه  را کامل وارد کنید");
+                return false;
+            }
+            if(jQuery("#address").val().length < 3 && !validateEmail(jQuery("#address").val()))
+            {
+                
+                alert("ایمیل  را کامل وارد کنید");
+                return false;
+            }
+            return true;
+        }
+        function isInt(n)
+        {
+            return Number(n)===n && n%1===0;
+        }
+        function validateEmail(email) { 
+            var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+            return re.test(email);
+        } 
 </script>
 <div>
 	<?php
@@ -107,6 +124,11 @@
 	?>
         
 	<form method="post" id="frm1">
+                <div class="alert alert-info" >
+                    قیمت:
+                    <?php echo monize($kargah->ghimat); ?> 
+                    ریال
+                </div>
 		<div class="CSSTableGenerator" >
 			<table>
 				<tr>
@@ -118,26 +140,26 @@
 				</tr>
 				<tr>
 					<td>
-						نام :
+						نام :*
 					</td>
 					<td>
-						<input name="fname" />
-					</td>
-				</tr>
-				<tr>
-					<td>
-						نام خانوادگی :
-					</td>
-					<td>
-						<input name="lname" />
+						<input id="fname"  name="fname" />
 					</td>
 				</tr>
 				<tr>
 					<td>
-						تلفن همراه:
+						نام خانوادگی :*
 					</td>
 					<td>
-						<input name="mob" />
+						<input name="lname"  id="lname" />
+					</td>
+				</tr>
+				<tr>
+					<td>
+						تلفن همراه:*
+					</td>
+					<td>
+						<input name="mob" id="mob" />
 					</td>
 				</tr>
 				<tr>
@@ -145,29 +167,29 @@
 						تلفن ثابت:
 					</td>
 					<td>
-						<input name="tell" />
+						<input name="tell" id="tell" />
 					</td>
 				</tr>
 				<tr>
 					<td>
-						ایمیل:
+						ایمیل:*
 					</td>
 					<td>
-						<input name="address" />
+						<input name="address" id="address" />
 					</td>
 				</tr>
-				<tr>
+				<tr id="tr_btn" >
 					<td>
 						<input type="hidden" name="id" value="<?php echo $id; ?>" />
 						<input type="hidden" name="bank_send" id="bank_send" value="false" />
 						<p class="readmore" ><a style="cursor:pointer" class="readmore" onclick="start_kharid(<?php echo $id; ?>,true);" >ثبت نام قطعی</a></p>
-                                                <span id="khoon" ></span>
 					</td>
 					<td>
 						<p class="readmore" ><a style="cursor:pointer" class="readmore" onclick="start_kharid(<?php echo $id; ?>,false);" >ثبت نام موقت</a></p>
 					</td>
-					</tr>
+				</tr>
 			</table>
+                        <div id="khoon" ></div>
 		</div>
 	</form>
 </div>
