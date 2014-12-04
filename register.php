@@ -21,12 +21,14 @@
             die($out);
         }    
 	$msg='';
+	$conf = new conf;
 	$id = (int)$_REQUEST['id'];
 	$kid = -1;
 	$kargah = new kargah_class($id);
 	$det = kargah_view_class::single_view($kargah);
 	if(isset($_REQUEST['fname']))
 	{
+                $ou = '-1';
 		$date = new DateTime(date("Y-m-d H:i:s"));
 		$date->setTimezone(new DateTimeZone('Asia/Tehran'));
 		$dt = $date->format('Y-m-d H:i:s').'<br/>';
@@ -34,34 +36,59 @@
 		$ln = $my->ex_sqlx("insert into #__kargah_reserve (tarikh,fname,lname,mob,tell,address,kargah_id) values ('$dt','".$_REQUEST['fname']."','".$_REQUEST['lname']."','".$_REQUEST['mob']."','".$_REQUEST['tell']."','".$_REQUEST['address']."',$id)",FALSE);
 		$kid = $my->insert_id($ln);
 		$my->close($ln);
-		$msg='<div class="alert alert-success" >ثبت با موفقیت انجام شد کد رهگیری شما <span id="rahgiri">'.$kid.'</span> می باشد</div>';
+        if($_REQUEST['bank']=='false')
+            $ou = $kid;
+        else
+        {
+
+            $kargah_id =(int) $_REQUEST['id'];
+            $kargah = new kargah_class($kargah_id);
+            $kid+=1000000;
+            if($kargah->ghimat>=1000 || TRUE)
+            {
+                $pay_code = pay_class::pay($kid,$kargah->ghimat);
+                $tmpo = explode(',',$pay_code);
+                if(count($tmpo)==2 && $tmpo[0]==0 && $conf->ps !== 'TRUE')
+                        $ou = $tmpo[1];
+                else
+                        $ou =-1;
+            }    
+        }
+        die("$ou");
 	}
 ?>
 <script>
 	var kargah_reserve_id = <?php echo $kid; ?>;
         var base_url ='<?php echo COM_PATH; ?>';
         
-        function start_kharid(inp)
+        function start_kharid(inp,bank)
 	{
-            jQuery("#khoon").html("درحال ارسال اطلاعات به بانک ...");
-            jQuery.get(base_url+"?comman=register&kargah_id="+inp+"&",function(result){
+            jQuery("#khoon").html("درحال ارسال اطلاعات ...");
+            var requ = jQuery("#frm1").serialize();
+            jQuery.get(base_url+"?comman=register&"+requ+"&bank="+(bank?'true':'false'),function(result){
                 console.log(result);
-                jQuery("#khoon").html("");
-                if(jQuery.trim(result)=='-1')
-                    alert('خطا در ارتباط با بانک');
-                else if (jQuery.trim(result)=='no_kargah')
-                    alert('هیچ  کارگاهی انتخاب نشده است');
-                else
+                result = jQuery.trim(result);
+                if(result!=='-1')
                 {
-                        //alert('کد رهگیری مربوط به بانک را یادداشت نمایید سپس به بانک هدایت می‌شوید' +result.split(',')[0] );
-                        postRefId(result.split(',')[1]);
+                    jQuery(".CSSTableGenerator input").prop("disabled",true);
+                    if(!bank)
+                    {    
+                        jQuery("#khoon").html("ثبت نام موقت شما با موفقیت انجام گرفت");
+                    }
+                    else
+                    {
+                        postRefId(result);
+                    }    
                 }
+                else
+                    alert("خطا در  ارتباط با بانک لطفا بعدا تلاش فرمایید");
             });
 	}
         function postRefId (refIdValue)
         {
                 var form = document.createElement("form");
                 form.setAttribute("method", "POST");
+				form.setAttribute("id", "mellat_frm");
                 form.setAttribute("action", "<?php echo $conf->mellat_payPage; ?>");         
                 form.setAttribute("target", "_self");
                 var hiddenField = document.createElement("input");              
@@ -69,7 +96,7 @@
                 hiddenField.setAttribute("value", refIdValue);
                 form.appendChild(hiddenField);
                 document.body.appendChild(form);         
-                form.submit();
+                jQuery("#mellat_frm").submit();
                 document.body.removeChild(form);
         }
         
@@ -77,7 +104,6 @@
 <div>
 	<?php
 		echo $msg.$det;
-                if(!isset($_REQUEST['fname'])){
 	?>
         
 	<form method="post" id="frm1">
@@ -134,16 +160,14 @@
 					<td>
 						<input type="hidden" name="id" value="<?php echo $id; ?>" />
 						<input type="hidden" name="bank_send" id="bank_send" value="false" />
-						<p class="readmore" ><a class="readmore" onclick="start_kharid(<?php echo $id; ?>);" >ثبت نام قطعی</a></p>
+						<p class="readmore" ><a style="cursor:pointer" class="readmore" onclick="start_kharid(<?php echo $id; ?>,true);" >ثبت نام قطعی</a></p>
                                                 <span id="khoon" ></span>
 					</td>
 					<td>
-						<p class="readmore" ><a href="#" class="readmore" >ثبت نام موقت</a></p>
-                                                <button>test</button>
+						<p class="readmore" ><a style="cursor:pointer" class="readmore" onclick="start_kharid(<?php echo $id; ?>,false);" >ثبت نام موقت</a></p>
 					</td>
 					</tr>
 			</table>
 		</div>
 	</form>
-                <?php } ?>
 </div>
