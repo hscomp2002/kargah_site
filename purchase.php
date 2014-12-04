@@ -15,15 +15,7 @@
 			$my = new mysql_class;
 			$kid = $SaleOrderId-1000000;
 			$my->ex_sqlx("update #__kargah_reserve set pardakht = '$SaleReferenceId' where id = $kid");
-/*
-			$pardakht = new pardakht_class($SaleOrderId);
-			$pardakht->bank_out = serialize($bank_out);
-			$pardakht->update();
-			$parvande = new parvande_class($pardakht->parvande_id);
-                        $toz = ' افزایش اعتبار بابت شارژ اینترنتی از درگاه، شماره پیگیری بانکی '.$SaleReferenceId;
-                        $parvande->addEtebar($pardakht->mablagh,user_parvande_class::loadUserIdByParvandeId($pardakht->parvande_id),$toz);
-*/
-			$rev = pay_class::settle($SaleOrderId,$SaleReferenceId);
+			//$rev = pay_class::settle($SaleOrderId,$SaleReferenceId);
 			$out = '<div class="msg" >
 					پرداخت با موفقیت انجام گرفت
 				</div>
