@@ -27,6 +27,7 @@
 		public function single_view($inp)
 		{
 			//$out = trim($inp->pic)===''?'':'<div><img alt="'.$inp->name.'" src="'.$inp->pic.'" /></div>';
+			$out='';
 			$out .='<div><h1>'.$inp->name.'</h1></div>';
 			$out .='<div><p>'.$inp->toz.'</p></div>';
 			return($out);

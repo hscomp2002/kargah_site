@@ -20,6 +20,7 @@ include COM_PATH.'class/jdf.php';
 include COM_PATH.'class/audit_class.php';
 include COM_PATH.'class/kargah_class.php';
 include COM_PATH.'class/kargah_view_class.php';
+include COM_PATH.'class/nusoap.php';
 include COM_PATH.'class/pay_class.php';
 $document = JFactory::getDocument();
 $document->addScript(COM_PATH.'js/jquery.min.js');
