@@ -189,6 +189,8 @@
 						<input type="hidden" name="id" value="<?php echo $id; ?>" />
 						<input type="hidden" name="bank_send" id="bank_send" value="false" />
 						<p class="readmore" ><a style="cursor:pointer" class="readmore" onclick="start_kharid(<?php echo $id; ?>,true);" >ثبت نام</a></p>
+پرداخت  از کلیه بانکها امکان پذیر است
+						<img src="<?php echo JURI::base().COM_PATH.'img/mellat.png' ?>"  >
 					</td>
 				</tr>
 			</table>
