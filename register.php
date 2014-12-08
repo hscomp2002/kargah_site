@@ -183,12 +183,12 @@
 				</tr>
 				<tr id="tr_btn" >
 					<td>
-						<input type="hidden" name="id" value="<?php echo $id; ?>" />
-						<input type="hidden" name="bank_send" id="bank_send" value="false" />
-						<p class="readmore" ><a style="cursor:pointer" class="readmore" onclick="start_kharid(<?php echo $id; ?>,true);" >ثبت نام قطعی</a></p>
+						<!-- <p class="readmore" ><a style="cursor:pointer" class="readmore" onclick="start_kharid(<?php echo $id; ?>,false);" >ثبت نام موقت</a></p> -->
 					</td>
 					<td>
-						<!-- <p class="readmore" ><a style="cursor:pointer" class="readmore" onclick="start_kharid(<?php echo $id; ?>,false);" >ثبت نام موقت</a></p> -->
+						<input type="hidden" name="id" value="<?php echo $id; ?>" />
+						<input type="hidden" name="bank_send" id="bank_send" value="false" />
+						<p class="readmore" ><a style="cursor:pointer" class="readmore" onclick="start_kharid(<?php echo $id; ?>,true);" >ثبت نام</a></p>
 					</td>
 				</tr>
 			</table>

@@ -11,7 +11,7 @@
 		$pay = pay_class::verify($SaleOrderId,$SaleReferenceId);
 		if(($pay == '0' || (int)$pay == 43) && (!is_array($pay)))
 		{
-                        JUtility::sendMail("it@arencenter.ir","آرن", 'hscomp2002@gmail.com','ثبت نام کارگاه','<html><body>ثبت نام نهایی انجام شد  رفرنس '.$SaleReferenceId.'</body></html>', TRUE);
+                        JUtility::sendMail("it@arencenter.ir","آرن", 'info@arencenter.ir','ثبت نام کارگاه','ثبت نام نهایی انجام شد  رفرنس '.$SaleReferenceId);
 			$my = new mysql_class;
 			$my->ex_sqlx("update #__kargah_reserve set pardakht = '$SaleReferenceId' where id =".((int)$SaleOrderId-1000000));
 			$rev = pay_class::settle($SaleOrderId,$SaleReferenceId);
