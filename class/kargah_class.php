@@ -25,7 +25,7 @@
 		{
 			$out = array();
 			$my = new mysql_class;
-			$my->ex_sql("select * from #__kargah_data where en = 1",$q);
+			$my->ex_sql("select * from #__kargah_data where en = 1 order by tarikh desc",$q);
 			foreach($q as $r)
 			{
 				$thi = new kargah_class;
