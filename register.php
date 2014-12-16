@@ -4,6 +4,9 @@
 	$id = (int)$_REQUEST['id'];
 	$kid = -1;
 	$kargah = new kargah_class($id);
+	$now = strtotime(date("Y-m-d H:i:s"));
+	$know = isset($kargah->tarikh)?strtotime($kargah->tarikh):0;
+	$is_past = $now < $know;
 	$det = kargah_view_class::single_view($kargah);
 	if(isset($_REQUEST['fname']))
 	{
@@ -125,7 +128,9 @@
 	<?php
 		echo $msg.$det;
 	?>
-        
+        <?php
+		if($is_past){
+	?>
 	<form method="post" id="frm1">
                 <div class="alert alert-info" >
                     شهریه:
@@ -184,11 +189,16 @@
 				<tr id="tr_btn" >
 					<td>
 						<!-- <p class="readmore" ><a style="cursor:pointer" class="readmore" onclick="start_kharid(<?php echo $id; ?>,false);" >ثبت نام موقت</a></p> -->
+						<p class="readmore" ><a style="cursor:pointer" class="readmore" href="http://arencenter.ir/index.php?option=com_content&view=article&id=603&catid=26" >ثبت نام از طریق سامانه نقشه سلامت</a></p>
 					</td>
 					<td>
 						<input type="hidden" name="id" value="<?php echo $id; ?>" />
 						<input type="hidden" name="bank_send" id="bank_send" value="false" />
 						<p class="readmore" ><a style="cursor:pointer" class="readmore" onclick="start_kharid(<?php echo $id; ?>,true);" >ثبت نام</a></p>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="2">
 پرداخت  از کلیه بانکها امکان پذیر است
 						<img src="<?php echo JURI::base().COM_PATH.'img/mellat.png' ?>"  >
 					</td>
@@ -197,4 +207,13 @@
                         <div id="khoon" ></div>
 		</div>
 	</form>
+	<?php
+	}
+	else
+	{
+	?>
+	<p class="readmore" ><a style="cursor:pointer" class="readmore" href="/index.php/component/kargah/?comman=combo" >پیشنهاد برگزاری مجدد این کارگاه یا کارگاه جدید</a></p>
+	<?php
+	}
+	?>
 </div>
