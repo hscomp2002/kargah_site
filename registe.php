@@ -189,12 +189,12 @@
 				<tr id="tr_btn" >
 					<td>
 						<!-- <p class="readmore" ><a style="cursor:pointer" class="readmore" onclick="start_kharid(<?php echo $id; ?>,false);" >ثبت نام موقت</a></p> -->
-						<p class="readmore" ><a style="cursor:pointer" class="readmore" href="http://arencenter.ir/index.php?option=com_content&view=article&id=603&catid=26" >ثبت نام از طریق سامانه نقشه سلامت</a></p>
+						<p class="readmore" ><a style="cursor:pointer" class="readmore" href="http://arencenter.ir/index.php?option=com_content&view=article&id=603&catid=26" >ثبت نام آنلاین از طریق آرن کارت</a></p>
 					</td>
 					<td>
 						<input type="hidden" name="id" value="<?php echo $id; ?>" />
 						<input type="hidden" name="bank_send" id="bank_send" value="false" />
-						<p class="readmore" ><a style="cursor:pointer" class="readmore" onclick="start_kharid(<?php echo $id; ?>,true);" >ثبت نام</a></p>
+						<p class="readmore" ><a style="cursor:pointer" class="readmore" onclick="start_kharid(<?php echo $id; ?>,true);" >ثبت نام آنلاین از طریق شبکه بانکی</a></p>
 					</td>
 				</tr>
 				<tr>

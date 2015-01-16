@@ -13,11 +13,11 @@
 					'<li class="thumb" >
 						<div class="thumb_all" >
 							<div class="thumb_img"  >
-								<a href="'.($url.'comman=register&id='.$kargah_obj->id).'" > 
+								<a href="'.($url.'comman=registe&id='.$kargah_obj->id).'" > 
                                                                     <img src="'.$kargah_obj->thumbnail.'">
 								</a>
 							</div>
-							<div class="thumb_title"><a style="color:white;visited:white;" href="'.($url.'comman=register&id='.$kargah_obj->id).'" >'.$kargah_obj->name.'</a></div>
+							<div class="thumb_title"><a style="color:white;visited:white;" href="'.($url.'comman=registe&id='.$kargah_obj->id).'" >'.$kargah_obj->name.'</a></div>
 						</div>
 					</li>';
 			}

@@ -61,7 +61,7 @@ else if($comman == 'combo')
                 $pishnahad=FALSE;
                 $my = new mysql_class;
                 $tarikh= date("Y-m-d H:i:s");
-                $my->ex_sqlx("insert into #__kargah_data (toz,en,tarikh,pishnehad) values ('$toz',-2,'$tarikh','$flname')");
+                $my->ex_sqlx("insert into #__kargah_data (toz,en,tarikh,pishnehad) values ('$toz',-1,'$tarikh','$flname')");
                 $out='<div class="alert alert-success" >پیشنهاد شما با موفقیت ثبت گردید</div>';
             }   
             else
@@ -75,7 +75,7 @@ else if($comman == 'combo')
 	foreach($kargahs as $kargah)
 		$out .= '<option value="'.$kargah->id.'" >'.$kargah->name.'</option>';
 	$out .= '</select>';
-	$out .= '<input type="hidden" name="comman" value="register" />';
+	$out .= '<input type="hidden" name="comman" value="registe" />';
 	$out .= '<button class="btn btn-lg " >انتخاب</button>';
 	$out .='</form></div>';
         if($pishnahad)
@@ -94,6 +94,5 @@ else if($comman == 'combo')
 else
 {
 	require($comman.'.php');
-	
 }
 //echo '<a href="index.php?option=com_kargah&"  class="btn btn-warning" ><i class="icon-white icon-arrow-left"></i>بازگشت به صفحه اصلی</a>';
